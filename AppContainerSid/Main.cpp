@@ -9,8 +9,10 @@
 /** Alternative implementation of the DeriveAppContainerSidFromAppContainerName algorithm. */
 void AlternativeAppContainerSID_impl(std::wstring appContainerName) {
     // convert name to lowercase
-    for (auto& elm : appContainerName)
-        elm = (wchar_t)std::tolower(elm);
+    for (auto& elm : appContainerName) {
+        if (L'A' <= elm && elm <= L'Z')
+            elm = elm - L'A' + L'a';
+    }
 
     HCRYPTPROV cryptProv = 0;
     if (!CryptAcquireContext(&cryptProv, NULL, NULL, PROV_RSA_AES, CRYPT_VERIFYCONTEXT))
